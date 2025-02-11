@@ -53,6 +53,16 @@ class Play extends Phaser.Scene {
         // Collision detection
         this.physics.add.overlap(player, this.foodGroup, this.collectFood, null, this);
         this.physics.add.overlap(player, this.obstacleGroup, this.hitObstacle, null, this);
+
+        this.emitter = this.add.particles(0, 0, "particle", {
+            frame: [],
+            lifespan: 3000,
+            speed: { min: 200, max: 250 },
+            scale: { start: 0.6, end: 0 },
+            gravityY: 0,
+            blendMode: "ADD",
+            emitting: false,
+        });
     }
 
     spawnFood() {
@@ -70,10 +80,17 @@ class Play extends Phaser.Scene {
 
     collectFood(player, food) {
         food.destroy();
+        this.emitter.x = food.x;
+        this.emitter.y = food.y;
+    
+        this.emitter.explode(16);
+
+
         foodCount++;
         this.scoreText.setText('Food Collected: ' + foodCount);
         if (foodCount > highScore) {
             highScore = foodCount;
+            //play sound
             localStorage.setItem('highScore', highScore); // Save to local storage
             this.highScoreText.setText(`High Score: ${highScore}`); // Update UI
         }
