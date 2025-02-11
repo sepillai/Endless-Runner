@@ -18,6 +18,8 @@ class Play extends Phaser.Scene {
         this.bgm.play();
         // Set up scrolling background
         this.bg = this.add.tileSprite(centerX, centerY, w, h, 'road').setOrigin(0.5);
+        this.highScore = localStorage.getItem('highScore') || 0;
+
 
         // Create player and enable physics
         
@@ -37,6 +39,8 @@ class Play extends Phaser.Scene {
         
         // Score and timer UI
         this.scoreText = this.add.text(20, 20, 'Food Collected: 0', { fontSize: '24px', fill: '#FFF' });
+        this.highScoreText = this.add.text(20, 50, `High Score: ${highScore}`, { fontSize: '24px', fill: '#FFF' });
+
 
 
 
@@ -68,6 +72,11 @@ class Play extends Phaser.Scene {
         food.destroy();
         foodCount++;
         this.scoreText.setText('Food Collected: ' + foodCount);
+        if (foodCount > highScore) {
+            highScore = foodCount;
+            localStorage.setItem('highScore', highScore); // Save to local storage
+            this.highScoreText.setText(`High Score: ${highScore}`); // Update UI
+        }
         this.sound.play('pickup');
     }
 

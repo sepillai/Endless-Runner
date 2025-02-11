@@ -19,12 +19,12 @@ class Menu extends Phaser.Scene {
             fill: '#FFF' 
         }).setOrigin(0.5);
         
-        this.add.text(centerX, centerY + textSpacer * 2, 'Press DOWN to Start', { 
+        this.add.text(centerX, centerY + textSpacer * 2, 'Press UP to Start', { 
             fontSize: '24px', 
             fill: '#FFF' 
         }).setOrigin(0.5);
 
-        this.add.text(centerX, centerY + textSpacer * 3, 'Press C for Credits', { 
+        this.add.text(centerX, centerY + textSpacer * 3, 'Press Down for Credits', { 
             fontSize: '24px', 
             fill: '#FFF' 
         }).setOrigin(0.5);
@@ -38,8 +38,9 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
             this.scene.start('playScene');
         }
-        if (Phaser.Input.Keyboard.JustDown(keyC)) {
-            this.scene.start('creditsScene');
+        if(Phaser.Input.Keyboard.JustDown(cursors.down)) {
+            this.scene.start('creditsScene')
         }
+
     }
 }
