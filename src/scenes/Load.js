@@ -15,7 +15,7 @@ class Load extends Phaser.Scene {
         });
 
         this.load.path = './assets/';
-        this.load.image('player', 'img/new Piskel-1.png.png', { frameWidth: 120, frameHeight: 120});
+        this.load.image('player', 'img/turtle.png', { frameWidth: 120, frameHeight: 120});
         //this.load.tilemapTiledJSON('icons', 'turtle/sprites.json');
         this.load.image('road', 'turtle/greyroad.png');
         this.load.image('pizza', 'img/pizza.png');
