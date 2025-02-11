@@ -15,8 +15,9 @@ class Load extends Phaser.Scene {
         });
 
         this.load.path = './assets/';
-        this.load.spritesheet('player', 'map/sheet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.image('road', 'img/map.png');
+        this.load.image('player', 'img/new Piskel-1.png.png', { frameWidth: 120, frameHeight: 120});
+        //this.load.tilemapTiledJSON('icons', 'turtle/sprites.json');
+        this.load.image('road', 'turtle/greyroad.png');
         this.load.image('pizza', 'img/pizza.png');
         this.load.image('cookie', 'img/cookie.png');
         this.load.image('boba', 'img/boba.png');
@@ -33,13 +34,7 @@ class Load extends Phaser.Scene {
     }
 
     create() {
-        this.anims.create({
-            key: 'drive',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 2}), // Uses frames 0, 1, 2
-            frameRate: 10,
-            repeat: -1
-        });
-        
+
         this.scene.start('menuScene');
     }
 }

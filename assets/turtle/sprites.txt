@@ -1,0 +1,9 @@
+New Piskel-2.png,0,0,32,32
+cookie,0,33,32,32
+boba,33,0,32,32
+pizza,33,33,32,32
+New Piskel-3.png,0,66,32,32
+stop,33,66,32,32
+apple,66,0,32,32
+cone,66,33,32,32
+New Piskel-1.png,66,66,32,32

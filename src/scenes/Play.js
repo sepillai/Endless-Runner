@@ -1,4 +1,8 @@
 let timer;
+let foodCount = 0;
+let timeLeft;
+
+// Declare but initialize in create()
 
 class Play extends Phaser.Scene {
     constructor() {
@@ -6,24 +10,51 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.bg = this.add.tileSprite(centerX, centerY, 'road').setOrigin(0.5);
-        this.bg.setDisplaySize(w, h); // Stretches it to fill the screen
 
+        this.bgm = this.sound.add('jazz', { 
+            mute: false,
+            volume: 0.2,
+            rate: 1,
+            loop: true 
+        });
+        this.bgm.play();
+        // Set up scrolling background
+        this.bg = this.add.tileSprite(centerX, centerY, w, h, 'road').setOrigin(0.5);
+
+        // Create player and enable physics
         player = this.physics.add.sprite(100, centerY, 'player').setCollideWorldBounds(true);
-        player.play('drive');
+        player.setScale(2); // Adjust size if needed
+       // player.play('drive');
+
+        // Set up keyboard controls
         cursors = this.input.keyboard.createCursorKeys();
         
+        // Create food and obstacle groups
         this.foodGroup = this.physics.add.group();
         this.obstacleGroup = this.physics.add.group();
         
+        // Define available food items
         this.foodItems = ['pizza', 'apple', 'boba', 'cookie'];
-        this.scoreText = this.add.text(20, 20, 'Food Collected: 0', { fontSize: '24px', fill: '#FFF' });
-        this.timerText = this.add.text(w - 150, 20, 'Time: 30', { fontSize: '24px', fill: '#FFF' });
         
+        // Score and timer UI
+        this.scoreText = this.add.text(20, 20, 'Food Collected: 0', { fontSize: '24px', fill: '#FFF' });
+
+        // ✅ Reset timer each time the game starts
+        timeLeft = 30; 
+        this.timerText = this.add.text(w - 150, 20, `Time: ${timeLeft}`, { fontSize: '24px', fill: '#FFF' });
+
+        // ✅ Remove any existing timer to prevent duplicates
+        if (timer) {
+            timer.remove();
+        }
+
+        timer = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
+
+        // Spawn food and obstacles
         this.time.addEvent({ delay: 2000, callback: this.spawnFood, callbackScope: this, loop: true });
         this.time.addEvent({ delay: 3000, callback: this.spawnObstacle, callbackScope: this, loop: true });
-        timer = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
-        
+
+        // Collision detection
         this.physics.add.overlap(player, this.foodGroup, this.collectFood, null, this);
         this.physics.add.overlap(player, this.obstacleGroup, this.hitObstacle, null, this);
     }
@@ -32,11 +63,13 @@ class Play extends Phaser.Scene {
         let foodType = Phaser.Utils.Array.GetRandom(this.foodItems);
         let food = this.foodGroup.create(w, Phaser.Math.Between(50, h - 50), foodType);
         food.setVelocityX(-200);
+        food.setScale(2); // Make food items bigger if needed
     }
 
     spawnObstacle() {
         let obstacle = this.obstacleGroup.create(w, Phaser.Math.Between(50, h - 50), 'obstacle');
         obstacle.setVelocityX(-250);
+        obstacle.setScale(2); // Adjust obstacle size if needed
     }
 
     collectFood(player, food) {
@@ -52,15 +85,21 @@ class Play extends Phaser.Scene {
     }
 
     updateTimer() {
-        timeLeft--;
-        this.timerText.setText('Time: ' + timeLeft);
+        if (timeLeft > 0) {
+            timeLeft--;
+            this.timerText.setText(`Time: ${timeLeft}`);
+        }
+
         if (timeLeft <= 0) {
             this.scene.start('menuScene');
         }
     }
 
     update() {
-        this.bg.tilePositionX += 4;
+        // Scroll background continuously
+        this.bg.tilePositionX += 2;
+
+        // Player movement
         if (cursors.up.isDown) {
             player.setVelocityY(-200);
         } else if (cursors.down.isDown) {
@@ -71,10 +110,13 @@ class Play extends Phaser.Scene {
         
         if (cursors.left.isDown) {
             player.setVelocityX(-200);
+            //player.play('left', true);
         } else if (cursors.right.isDown) {
             player.setVelocityX(200);
+            //player.play('right', true);
         } else {
             player.setVelocityX(0);
+            //player.play('drive', true);
         }
     }
 }
