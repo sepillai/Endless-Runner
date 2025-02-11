@@ -14,12 +14,12 @@ class Menu extends Phaser.Scene {
             fill: '#FFF' 
         }).setOrigin(0.5);
         
-        this.add.text(centerX, centerY + textSpacer, 'Pick up food items before the timer runs out!', { 
+        this.add.text(centerX, centerY + textSpacer, 'Pick up food items and do not hit any obstacles!', { 
             fontSize: '24px', 
             fill: '#FFF' 
         }).setOrigin(0.5);
         
-        this.add.text(centerX, centerY + textSpacer * 2, 'Press ENTER to Start', { 
+        this.add.text(centerX, centerY + textSpacer * 2, 'Press DOWN to Start', { 
             fontSize: '24px', 
             fill: '#FFF' 
         }).setOrigin(0.5);
@@ -38,8 +38,8 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
             this.scene.start('playScene');
         }
-        //if (Phaser.Input.Keyboard.JustDown(keyC)) {
-          //  this.scene.start('creditsScene');
-        //}
+        if (Phaser.Input.Keyboard.JustDown(keyC)) {
+            this.scene.start('creditsScene');
+        }
     }
 }
