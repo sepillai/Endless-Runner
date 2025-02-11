@@ -2,6 +2,10 @@
 //Delivery Dash
 //15 hours 
 //Creative Tilt: 
+//Technical: Added local storage to display a high score that updates every time the player beats the current high score. Local
+//storage remembers the previous high score and plays a sound when the player hits the high score in game. 
+
+ //Visual: I used the Particle Documentation from Phaser and added a particle explosion every time the player collects a food item!
 
 
 'use strict';
@@ -37,3 +41,4 @@ let score = 0;
 let highScore = 0;
 let newHighScore = false;
 let cursors;
+let foodCount = 0;
