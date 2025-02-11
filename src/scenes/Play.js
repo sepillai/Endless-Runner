@@ -90,7 +90,8 @@ class Play extends Phaser.Scene {
         this.scoreText.setText('Food Collected: ' + foodCount);
         if (foodCount > highScore) {
             highScore = foodCount;
-            //play sound
+            //play high score sound
+            this.sound.play('highscore');
             localStorage.setItem('highScore', highScore); // Save to local storage
             this.highScoreText.setText(`High Score: ${highScore}`); // Update UI
         }

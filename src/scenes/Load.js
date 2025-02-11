@@ -27,6 +27,7 @@ class Load extends Phaser.Scene {
         this.load.audio('jazz', ['audio/jazz_music_background.mp3']);
         this.load.audio('pickup', ['audio/pickup.wav']);
         this.load.audio('power', ['audio/power.wav']);
+        this.load.audio('highscore', ['audio/highscore.wav']);
         this.load.audio('crash', ['audio/hit.wav']);
         // powerup 
         //pickup
